@@ -23,7 +23,7 @@ export default function TodoForm({ setTodos }: TodoFormProps) {
       const status = response.status;
       if (status !== 200) console.error("Couldn't create a new todo");
 
-      const result = await response.json() as { [key: number]: [string, boolean] };
+      const result = await response.json();
       // console.log("result:", result, typeof result);
 
       setNewTodo(""); // Clear the form input

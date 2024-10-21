@@ -1,7 +1,29 @@
+import { useEffect } from "react";
 
-export default function TodoList({ todos }: TodoListProps) {
+export default function TodoList({ todos, setTodos }: TodoListProps) {
   const INDEX_TODO_NAME = 0;
   const INDEX_TODO_COMPLETION = 1;
+
+  useEffect(() => {
+    const getAllTodos = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/allTodos", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const results = await response.json();
+        setTodos(results);
+
+      } catch (error: any) {
+        console.error(error);
+      }
+    }
+
+    getAllTodos();
+  }, [])
 
   return (
     <>
@@ -27,4 +49,5 @@ export default function TodoList({ todos }: TodoListProps) {
 
 interface TodoListProps {
   todos: { [key: number]: [string, boolean] };
+  setTodos: (todos: { [key: number]: [string, boolean] }) => void;
 }
