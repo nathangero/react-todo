@@ -34,11 +34,34 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
         ...todos,
         [timestamp]: result
       });
+
     } catch (error: any) {
       console.error(error);
     }
+  }
 
+  const onClickDeleteTodo = async (timestamp: number) => {
+    try {
+      const response = await (fetch(`http://localhost:3001/${timestamp}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }));
 
+      const status = response.status;
+      if (status !== 200) {
+        console.error("Couldn't delete todo");
+        return;
+      }
+
+      const result = await response.json();
+      console.log("deleted todo");
+      setTodos({ ...result });
+
+    } catch (error: any) {
+      console.error(error);
+    }
   }
 
   useEffect(() => {
@@ -77,6 +100,7 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
         <li className="flex font-bold text-2xl m-auto max-w-xl">
           <span className="flex-1">TODO</span>
           <span className="flex-1">COMPLETED</span>
+          <span className="flex-0.5 text-white">d</span>
         </li>
 
 
@@ -95,6 +119,11 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
                     checked={todo[INDEX_TODO_COMPLETION]}
                   />
                 </div>
+                <button
+                  type="button"
+                  className="text-white bg-red-700 rounded px-2"
+                  onClick={() => onClickDeleteTodo(Number(key))}
+                >X</button>
               </li>
             )
           })
