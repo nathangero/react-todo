@@ -29,14 +29,21 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
     <>
       <h2 className="text-3xl">List of Todos</h2>
 
-      <ul>
+      <ul className="space-y-2">
+        <li className="flex font-bold text-2xl m-auto max-w-xl">
+          <span className="flex-1">TODO</span>
+          <span className="flex-1">COMPLETED</span>
+        </li>
+
+
+        <hr className="flex m-auto max-w-xl" />
         <>
           {Object.keys(todos).map((key) => {
             const todo = todos[Number(key)];
             return (
-              <li key={key} className="flex justify-center">
-                <label className="font-bold text-3xl mx-2">{todo[INDEX_TODO_NAME]}</label>
-                <p className="italic text-3xl mx-2">{todo[INDEX_TODO_COMPLETION] ? <input type="checkbox" checked /> : <input type="checkbox" />}</p>
+              <li key={key} className="flex items-center font-bold text-lg mx-auto max-w-xl border-b border-gray-300 pb-4">
+                <p className="flex-1 font-semibold text-3xl">{todo[INDEX_TODO_NAME]}</p>
+                <input type="checkbox" className="flex-1 form-checkbox h-6 w-6" checked={todo[INDEX_TODO_COMPLETION]} disabled />
               </li>
             )
           })
