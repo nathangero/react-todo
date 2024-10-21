@@ -53,7 +53,7 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
         <hr className="flex m-auto max-w-xl" />
         <>
           {Object.keys(todos).map((key) => {
-            const todo = todos[key];
+            const todo = todos[Number(key)];
             return (
               <li key={key} className="flex items-center font-bold text-lg mx-auto max-w-xl border-b border-gray-300 pb-4">
                 <p className="flex-1 font-semibold text-3xl">{todo[INDEX_TODO_NAME]}</p>
@@ -61,7 +61,7 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
                   <input
                     type="checkbox"
                     className="form-checkbox h-6 w-6"
-                    onChange={(event) => onClickCheckbox(event, key)}
+                    onChange={(event) => onClickCheckbox(event, Number(key))}
                     checked={todo[INDEX_TODO_COMPLETION]}
                   />
                 </div>

@@ -17,8 +17,9 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Welcome to the server!");
 });
 
+// Send over all the todos
 app.get("/allTodos", (req: Request, res: Response) => {
-  console.log("get all todos");
+  // console.log("get all todos");
 
   res.send(JSON.stringify(DB));
 });
