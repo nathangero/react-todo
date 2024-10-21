@@ -6,15 +6,39 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
 
   const onClickCheckbox = async (event: ChangeEvent<HTMLInputElement>, timestamp: number) => {
     const completed = event.target.checked;
-    console.log(completed);
+    // console.log(completed);
 
-    setTodos({
-      ...todos,
-      [timestamp]: {
-        ...todos[timestamp],
-        [INDEX_TODO_COMPLETION]: !!completed
+    const body = {
+      timestamp: timestamp,
+      completed: completed
+    }
+
+    try {
+      const response = await (fetch("http://localhost:3001/todo", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body)
+      }));
+
+      const status = response.status;
+      if (status !== 200) {
+        console.error("Couldn't update todo");
+        return;
       }
-    });
+
+      const result = await response.json();
+
+      setTodos({
+        ...todos,
+        [timestamp]: result
+      });
+    } catch (error: any) {
+      console.error(error);
+    }
+
+
   }
 
   useEffect(() => {
@@ -27,6 +51,12 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
             "Content-Type": "application/json",
           },
         });
+
+        const status = response.status;
+        if (status !== 200) {
+          console.error("Couldn't get all todos");
+          return;
+        }
 
         const results = await response.json();
         setTodos(results);
@@ -55,8 +85,8 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
           {Object.keys(todos).map((key) => {
             const todo = todos[Number(key)];
             return (
-              <li key={key} className="flex items-center font-bold text-lg mx-auto max-w-xl border-b border-gray-300 pb-4">
-                <p className="flex-1 font-semibold text-3xl">{todo[INDEX_TODO_NAME]}</p>
+              <li key={key} className="flex items-center font-bold text-lg mx-auto max-w-xl border-b border-gray-300">
+                <label className="flex-1 font-semibold text-3xl mb-3">{todo[INDEX_TODO_NAME]}</label>
                 <div className="flex-1">
                   <input
                     type="checkbox"
