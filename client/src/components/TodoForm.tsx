@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 
-export default function TodoForm() {
+export default function TodoForm({ setTodos }: TodoFormProps) {
   const [newTodo, setNewTodo] = useState<string>('');
 
   const onChangeNewTodo = (event: ChangeEvent<HTMLInputElement>) => {
@@ -20,8 +20,14 @@ export default function TodoForm() {
         body: JSON.stringify({ "todo": newTodo })
       });
 
-      const result = response.status;
-      console.log("result:", result);
+      const status = response.status;
+      if (status !== 200) console.error("Couldn't create a new todo");
+
+      const result = await response.json() as { [key: number]: [string, boolean] };
+      // console.log("result:", result, typeof result);
+
+      setNewTodo(""); // Clear the form input
+      setTodos(result);
     } catch (error: any) {
       console.error(error);
     }
@@ -36,4 +42,8 @@ export default function TodoForm() {
       <button className="bg-blue-500 text-white rounded p-2 m-2">Add</button>
     </form>
   )
+}
+
+interface TodoFormProps {
+  setTodos: (todos: { [key: number]: [string, boolean] }) => void;
 }

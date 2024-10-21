@@ -32,7 +32,7 @@ app.put("/todo", (req: Request, res: Response) => {
 
   console.log(DB);
 
-  res.status(200).json([time, DB[time]]);
+  res.status(200).json(DB);
 });
 
 app.patch("/todo", (req: Request, res: Response) => {
