@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
-  console.log("server ping");
+  // console.log("server ping");
   res.send("Welcome to the server!");
 });
 
@@ -25,7 +25,7 @@ app.get("/allTodos", (req: Request, res: Response) => {
 });
 
 app.put("/todo", (req: Request, res: Response) => {
-  console.log("put todo");
+  // console.log("put todo");
 
   const todo = req.body.todo;
   const time = Date.now();
@@ -37,7 +37,7 @@ app.put("/todo", (req: Request, res: Response) => {
 });
 
 app.patch("/todo", (req: Request, res: Response) => {
-  console.log("update todo");
+  // console.log("update todo");
 
   const timestamp = req.body.timestamp;
   const todoName = req.body.todoName;
@@ -50,10 +50,10 @@ app.patch("/todo", (req: Request, res: Response) => {
 });
 
 app.delete("/:timestamp", (req: Request, res: Response) => {
-  console.log("delete todo");
+  // console.log("delete todo");
 
   const timestamp = parseInt(req.params.timestamp);
-  console.log("delete todo at timestamp:", timestamp);
+  // console.log("delete todo at timestamp:", timestamp);
 
   delete DB[timestamp];
   res.status(200).json(DB);
