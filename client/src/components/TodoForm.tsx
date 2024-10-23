@@ -45,5 +45,6 @@ export default function TodoForm({ setTodos }: TodoFormProps) {
 }
 
 interface TodoFormProps {
-  setTodos: (todos: { [key: number]: [string, boolean] }) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setTodos: (todos: { [key: number]: { [key: string]: any } }) => void;
 }

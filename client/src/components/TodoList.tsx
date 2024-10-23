@@ -1,8 +1,8 @@
 import { ChangeEvent, useEffect } from "react";
 
 export default function TodoList({ todos, setTodos }: TodoListProps) {
-  const INDEX_TODO_NAME = 0;
-  const INDEX_TODO_COMPLETION = 1;
+  const KEY_TODO_TITLE = "title";
+  const KEY_TODO_COMPLETION = "completed";
 
   const onClickCheckbox = async (event: ChangeEvent<HTMLInputElement>, timestamp: number) => {
     const completed = event.target.checked;
@@ -108,15 +108,16 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
         <>
           {Object.keys(todos).map((key) => {
             const todo = todos[Number(key)];
+            console.log("todo:", todo);
             return (
               <li key={key} className="flex items-center font-bold text-lg mx-auto max-w-xl border-b border-gray-300">
-                <label className="flex-1 font-semibold text-3xl mb-3">{todo[INDEX_TODO_NAME]}</label>
+                <label className="flex-1 font-semibold text-3xl mb-3">{todo[KEY_TODO_TITLE]}</label>
                 <div className="flex-1">
                   <input
                     type="checkbox"
                     className="form-checkbox h-6 w-6"
                     onChange={(event) => onClickCheckbox(event, Number(key))}
-                    checked={todo[INDEX_TODO_COMPLETION]}
+                    checked={todo[KEY_TODO_COMPLETION]}
                   />
                 </div>
                 <button
@@ -136,5 +137,6 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
 
 interface TodoListProps {
   todos: { [key: number]: [string, boolean] };
-  setTodos: (todos: { [key: number]: [string, boolean] }) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setTodos: (todos: { [key: number]: { [key: string]: any } }) => void;
 }
