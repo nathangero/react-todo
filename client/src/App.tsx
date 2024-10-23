@@ -4,7 +4,8 @@ import TodoList from "./components/TodoList"
 
 
 function App() {
-  const [todos, setTodos] = useState<{ [key: number]: [string, boolean] }>({});
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [todos, setTodos] = useState<{ [key: number]: { [key: string]: any } }>({});
 
   return (
     <>
