@@ -4,12 +4,12 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
   const KEY_TODO_TITLE = "title";
   const KEY_TODO_COMPLETION = "completed";
 
-  const onClickCheckbox = async (event: ChangeEvent<HTMLInputElement>, timestamp: number) => {
+  const onClickCheckbox = async (event: ChangeEvent<HTMLInputElement>, index: number) => {
     const completed = event.target.checked;
     // console.log(completed);
 
     const body = {
-      timestamp: timestamp,
+      index: index,
       completed: completed
     }
 
@@ -32,7 +32,7 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
 
       setTodos({
         ...todos,
-        [timestamp]: result
+        [index]: result
       });
 
     } catch (error: any) {
@@ -40,9 +40,9 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
     }
   }
 
-  const onClickDeleteTodo = async (timestamp: number) => {
+  const onClickDeleteTodo = async (index: number) => {
     try {
-      const response = await (fetch(`http://localhost:3001/${timestamp}`, {
+      const response = await (fetch(`http://localhost:3001/${index}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
