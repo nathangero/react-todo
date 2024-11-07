@@ -14,7 +14,7 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
     }
 
     try {
-      const response = await (fetch("http://localhost:3001/todo", {
+      const response = await (fetch("http://localhost:3001/api/todos", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
 
   const onClickDeleteTodo = async (index: number) => {
     try {
-      const response = await (fetch(`http://localhost:3001/${index}`, {
+      const response = await (fetch(`http://localhost:3001/api/todos/${index}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
     // Get all the todos upon page refresh
     const getAllTodos = async () => {
       try {
-        const response = await fetch("http://localhost:3001/allTodos", {
+        const response = await fetch("http://localhost:3001/api/todos/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
